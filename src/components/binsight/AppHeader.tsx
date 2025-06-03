@@ -8,7 +8,7 @@ export function AppHeader() {
         <div className="flex items-center">
           <Waves className="h-8 w-8 text-primary mr-3" />
           <h1 className="text-3xl font-headline font-bold text-primary">
-            BinSight
+            ZeroTrace
           </h1>
         </div>
         <ThemeToggle />
