@@ -31,7 +31,6 @@ export function TrashLog({ trashEvents }: TrashLogProps) {
                 <TableHead>Confidence</TableHead>
                 <TableHead>Est. Weight</TableHead>
                 <TableHead>Timestamp</TableHead>
-                 <TableHead>Details</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -67,7 +66,6 @@ export function TrashLog({ trashEvents }: TrashLogProps) {
                     </div>
                   </TableCell>
                   <TableCell>{format(event.timestamp, 'PPpp')}</TableCell>
-                  <TableCell className="text-xs text-muted-foreground">{event.dataAiHint}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
