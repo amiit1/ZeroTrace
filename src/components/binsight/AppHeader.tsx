@@ -15,14 +15,21 @@ export function AppHeader() {
     <header className="bg-card border-b border-border shadow-sm">
       <div className="container mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center">
+          <Waves className="h-8 w-8 text-primary mr-2 md:mr-3" />
+          <h1 className="text-2xl md:text-3xl font-headline font-bold text-primary">
+            ZeroTrace
+          </h1>
+        </div>
+        <div className="flex items-center space-x-2 md:space-x-3">
+          <ThemeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="mr-2 md:mr-3">
+              <Button variant="ghost" size="icon">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open navigation menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
+            <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
                 <Link href="/">Dashboard</Link>
               </DropdownMenuItem>
@@ -31,12 +38,7 @@ export function AppHeader() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Waves className="h-8 w-8 text-primary mr-2 md:mr-3" />
-          <h1 className="text-2xl md:text-3xl font-headline font-bold text-primary">
-            ZeroTrace
-          </h1>
         </div>
-        <ThemeToggle />
       </div>
     </header>
   );
