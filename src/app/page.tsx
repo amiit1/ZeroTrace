@@ -14,7 +14,8 @@ const initialEvents: TrashEvent[] = [
     timestamp: new Date(Date.now() - 3600000 * 2), // 2 hours ago
     type: 'organic', 
     imageUrl: 'https://placehold.co/100x100/228B22/FFFFFF.png?text=AppleCore', 
-    confidence: 0.92, 
+    confidence: 0.92,
+    weight: 0.15, // kg
     dataAiHint: 'apple core' 
   },
   { 
@@ -22,7 +23,8 @@ const initialEvents: TrashEvent[] = [
     timestamp: new Date(Date.now() - 3600000 * 5), // 5 hours ago
     type: 'inorganic', 
     imageUrl: 'https://placehold.co/100x100/A9A9A9/FFFFFF.png?text=PlasticBottle', 
-    confidence: 0.98, 
+    confidence: 0.98,
+    weight: 0.05, // kg
     dataAiHint: 'plastic bottle'
   },
 ];

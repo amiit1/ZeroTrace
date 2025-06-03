@@ -14,11 +14,11 @@ interface AddTrashSimulatorProps {
 }
 
 const sampleTrashItems = [
-  { url: 'https://placehold.co/150x150/8FBC8F/FFFFFF.png?text=Peel', hint: 'fruit peel', dataAiHint: "fruit peel" },
-  { url: 'https://placehold.co/150x150/D2B48C/FFFFFF.png?text=Cardboard', hint: 'cardboard box', dataAiHint: "cardboard box" },
-  { url: 'https://placehold.co/150x150/ADD8E6/FFFFFF.png?text=Bottle', hint: 'plastic bottle', dataAiHint: "plastic bottle" },
-  { url: 'https://placehold.co/150x150/A9A9A9/FFFFFF.png?text=Can', hint: 'metal can', dataAiHint: "metal can" },
-  { url: 'https://placehold.co/150x150/F0E68C/000000.png?text=Paper', hint: 'crumpled paper', dataAiHint: "crumpled paper" },
+  { url: 'https://placehold.co/150x150/8FBC8F/FFFFFF.png?text=Peel', hint: 'fruit peel', dataAiHint: "fruit peel", weight: 0.1 },
+  { url: 'https://placehold.co/150x150/D2B48C/FFFFFF.png?text=Cardboard', hint: 'cardboard box', dataAiHint: "cardboard box", weight: 0.25 },
+  { url: 'https://placehold.co/150x150/ADD8E6/FFFFFF.png?text=Bottle', hint: 'plastic bottle', dataAiHint: "plastic bottle", weight: 0.05 },
+  { url: 'https://placehold.co/150x150/A9A9A9/FFFFFF.png?text=Can', hint: 'metal can', dataAiHint: "metal can", weight: 0.03 },
+  { url: 'https://placehold.co/150x150/F0E68C/000000.png?text=Paper', hint: 'crumpled paper', dataAiHint: "crumpled paper", weight: 0.02 },
 ];
 
 export function AddTrashSimulator({ onAddTrash }: AddTrashSimulatorProps) {
@@ -43,6 +43,7 @@ export function AddTrashSimulator({ onAddTrash }: AddTrashSimulatorProps) {
         timestamp: new Date(),
         type: classificationResult.trashType,
         confidence: classificationResult.confidence,
+        weight: randomItem.weight,
         imageUrl: randomItem.url, // Use the original URL for display
         dataAiHint: randomItem.dataAiHint,
       };

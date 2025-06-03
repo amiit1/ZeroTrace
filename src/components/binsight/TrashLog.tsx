@@ -2,7 +2,7 @@ import type { TrashEvent } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Image from 'next/image';
-import { Leaf, Package } from 'lucide-react';
+import { Leaf, Package, Weight } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface TrashLogProps {
@@ -29,6 +29,7 @@ export function TrashLog({ trashEvents }: TrashLogProps) {
                 <TableHead className="w-[80px]">Image</TableHead>
                 <TableHead>Type</TableHead>
                 <TableHead>Confidence</TableHead>
+                <TableHead>Est. Weight</TableHead>
                 <TableHead>Timestamp</TableHead>
                  <TableHead>Details</TableHead>
               </TableRow>
@@ -59,6 +60,12 @@ export function TrashLog({ trashEvents }: TrashLogProps) {
                     </span>
                   </TableCell>
                   <TableCell>{(event.confidence * 100).toFixed(0)}%</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <Weight className="h-3.5 w-3.5 text-muted-foreground" />
+                      {event.weight.toFixed(2)} kg
+                    </div>
+                  </TableCell>
                   <TableCell>{format(event.timestamp, 'PPpp')}</TableCell>
                   <TableCell className="text-xs text-muted-foreground">{event.dataAiHint}</TableCell>
                 </TableRow>
