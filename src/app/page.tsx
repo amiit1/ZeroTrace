@@ -1,12 +1,15 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
 import type { TrashEvent } from '@/lib/types';
-import { AppHeader } from '@/components/binsight/AppHeader';
-import { DashboardStats } from '@/components/binsight/DashboardStats';
-import { WasteDistributionChart } from '@/components/binsight/WasteDistributionChart';
-import { TrashLog } from '@/components/binsight/TrashLog';
-import { AddTrashSimulator } from '@/components/binsight/AddTrashSimulator';
+import { AppHeader } from '@/components/zerotrace/AppHeader';
+import { DashboardStats } from '@/components/zerotrace/DashboardStats';
+import { WasteDistributionChart } from '@/components/zerotrace/WasteDistributionChart';
+import { TrashLog } from '@/components/zerotrace/TrashLog';
+import { AddTrashSimulator } from '@/components/zerotrace/AddTrashSimulator';
+import { PiHealthCheck } from '@/components/zerotrace/PiHealthCheck';
+
 
 const initialEvents: TrashEvent[] = [
   { 
@@ -69,8 +72,9 @@ export default function HomePage() {
           <div className="lg:col-span-2">
             <WasteDistributionChart trashEvents={trashEvents} />
           </div>
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 flex flex-col gap-8">
             <AddTrashSimulator onAddTrash={handleAddTrash} />
+            <PiHealthCheck />
           </div>
         </div>
         

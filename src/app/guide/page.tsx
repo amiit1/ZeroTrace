@@ -1,7 +1,7 @@
 
 'use client';
 
-import { AppHeader } from '@/components/binsight/AppHeader';
+import { AppHeader } from '@/components/zerotrace/AppHeader';
 import {
   Accordion,
   AccordionContent,
