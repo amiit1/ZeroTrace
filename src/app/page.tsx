@@ -9,28 +9,59 @@ import { WasteDistributionChart } from '@/components/zerotrace/WasteDistribution
 import { TrashLog } from '@/components/zerotrace/TrashLog';
 import { AddTrashSimulator } from '@/components/zerotrace/AddTrashSimulator';
 import { PiHealthCheck } from '@/components/zerotrace/PiHealthCheck';
+import { mapSpecificTypeToDetails } from '@/lib/types';
 
 
-const initialEvents: TrashEvent[] = [
+const initialEventsData: Array<Omit<TrashEvent, 'id' | 'type' | 'category' | 'timestamp'> & { specificWasteType: TrashEvent['specificWasteType'], timestampOffsetHours?: number }> = [
   { 
-    id: '1', 
-    timestamp: new Date(Date.now() - 3600000 * 2), // 2 hours ago
-    type: 'organic', 
+    timestampOffsetHours: 2,
+    specificWasteType: 'organic', 
     imageUrl: 'https://placehold.co/100x100/228B22/FFFFFF.png?text=AppleCore', 
     confidence: 0.92,
-    weight: 0.15, // kg
+    weight: 0.15, 
     dataAiHint: 'apple core' 
   },
   { 
-    id: '2', 
-    timestamp: new Date(Date.now() - 3600000 * 5), // 5 hours ago
-    type: 'inorganic', 
+    timestampOffsetHours: 5,
+    specificWasteType: 'plastic', 
     imageUrl: 'https://placehold.co/100x100/A9A9A9/FFFFFF.png?text=PlasticBottle', 
     confidence: 0.98,
-    weight: 0.05, // kg
+    weight: 0.05, 
     dataAiHint: 'plastic bottle'
   },
+  {
+    timestampOffsetHours: 8,
+    specificWasteType: 'battery',
+    imageUrl: 'https://placehold.co/100x100/FFD700/000000.png?text=Battery',
+    confidence: 0.99, // Pi might provide this
+    weight: 0.02,
+    dataAiHint: 'AA battery'
+  },
+  {
+    timestampOffsetHours: 10,
+    specificWasteType: 'paper',
+    imageUrl: 'https://placehold.co/100x100/F0E68C/000000.png?text=Paper',
+    weight: 0.1,
+    dataAiHint: 'crumpled paper'
+  }
 ];
+
+const initialEvents: TrashEvent[] = initialEventsData.map((eventData, index) => {
+  const { type, category } = mapSpecificTypeToDetails(eventData.specificWasteType);
+  return {
+    id: (index + 1).toString(),
+    timestamp: new Date(Date.now() - 3600000 * (eventData.timestampOffsetHours || (index + 1) * 2)),
+    specificWasteType: eventData.specificWasteType,
+    type,
+    category,
+    imageUrl: eventData.imageUrl.includes("?text=") 
+      ? eventData.imageUrl 
+      : `https://placehold.co/100x100/cccccc/000000.png?text=${encodeURIComponent(eventData.specificWasteType)}`,
+    confidence: eventData.confidence,
+    weight: eventData.weight,
+    dataAiHint: eventData.dataAiHint || eventData.specificWasteType,
+  };
+});
 
 
 export default function HomePage() {
@@ -38,20 +69,17 @@ export default function HomePage() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    // Load initial/persisted data only on client-side
-    // For now, using hardcoded initialEvents
-    // In a real app, this could come from localStorage or an API
     setTrashEvents(initialEvents);
     setIsMounted(true);
   }, []);
 
-
+  // This handler is called by AddTrashSimulator.
+  // In a real app with a DB, this would likely trigger a re-fetch or be updated by a real-time listener.
   const handleAddTrash = (newEvent: TrashEvent) => {
     setTrashEvents(prevEvents => [newEvent, ...prevEvents]);
   };
 
   if (!isMounted) {
-    // You can render a loading skeleton here if needed
     return (
       <div className="flex flex-col min-h-screen bg-background text-foreground">
         <AppHeader />
@@ -73,6 +101,8 @@ export default function HomePage() {
             <WasteDistributionChart trashEvents={trashEvents} />
           </div>
           <div className="lg:col-span-1 flex flex-col gap-8">
+            {/* Pass the API endpoint to the simulator if it were to POST */}
+            {/* For now, it calls onAddTrash directly with a fully formed event */}
             <AddTrashSimulator onAddTrash={handleAddTrash} />
             <PiHealthCheck />
           </div>
