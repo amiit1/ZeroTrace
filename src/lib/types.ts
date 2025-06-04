@@ -3,7 +3,7 @@ export interface TrashEvent {
   timestamp: Date;
   type: 'organic' | 'inorganic';
   imageUrl: string;
-  confidence: number;
+  confidence?: number; // Made confidence optional
   weight: number; // Estimated weight in kilograms
   dataAiHint: string; // For placeholder image search keywords
 }
